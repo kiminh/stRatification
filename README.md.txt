@@ -7,7 +7,7 @@ The original idea is introduced in [this](http://www.nber.org/papers/w19742) pap
 Especially, this package is aim to reproduce the Table2 in the above paper.
 This package is still in developing, though you are able to reproduce the table 2 some degree.
 
-##STAR dataset
+## STAR dataset
 
 The original dataset is possible to download from [here](https://ideas.repec.org/p/boc/bocins/webstar.html)
 
