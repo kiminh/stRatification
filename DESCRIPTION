@@ -1,0 +1,14 @@
+Package: stRatification
+Type: Package
+Title: estimate the treatment effect in subgroup of dataset
+Version: 0.1.0
+Author: Shota Yasui
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    tidyr,
+    broom
