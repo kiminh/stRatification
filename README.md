@@ -14,3 +14,9 @@ The original dataset is possible to download from [here](https://ideas.repec.org
 Also you can find some definitions of the column in those data in [here](http://wise.xmu.edu.cn/course/gecon/star_Description.pdf)
 
 You are able to find the example code and result [here](/STAR_example/STAR_EXAMPLE.html), please read this before you go for your analysis.
+
+
+## Reference
+
+Abadie, Alberto, Matthew M. Chingos, and Martin R. West. Endogenous stratification in randomized experiments.
+No. w19742. National Bureau of Economic Research, 2013.
