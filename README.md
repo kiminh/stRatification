@@ -1,11 +1,18 @@
 # stRatification package
 
-## about here
+## about this package
 
 stRatification is developed to analyze the Average Treatment Effect of subgroup that is build based on the prediction result.
 The original idea is introduced in [this](http://www.nber.org/papers/w19742) paper.
 Especially, this package is aim to reproduce the Table2 in the above paper.
 This package is still in developing, though you are able to reproduce the table 2 some degree.
+
+## install
+
+You are able to install with install_github function in devtools package.
+```
+devtools::install_github("yasui-salmon/stRatification")
+```
 
 ## STAR dataset
 
