@@ -20,7 +20,10 @@ The original dataset is possible to download from [here](https://ideas.repec.org
 
 Also you can find some definitions of the column in those data in [here](http://wise.xmu.edu.cn/course/gecon/star_Description.pdf)
 
-You are able to find the example code and result [here](/STAR_example/STAR_EXAMPLE.html), please read this before you go for your analysis.
+
+## STAR Example
+You are able to find the example code and result [here](https://github.com/yasui-salmon/stRatification/blob/master/STAR_example/STAR_EXAMPLE.md), please check this before you go for your analysis.
+Also the Rmd file of the above example is putted [here](https://github.com/yasui-salmon/stRatification/blob/master/STAR_example/STAR_EXAMPLE.Rmd)
 
 
 ## Reference
