@@ -232,7 +232,7 @@ panel_a %>%
                 position = position_dodge(.9)) +
   xlab("adjusted/unadjusted estimation of ATE") +
   ylab("Estimated ATE in dummy regression") +
-  ggtitle("Reproduction of Table 2, PanelA in Abadie et al. (2016)") +
+  ggtitle("Reproduction of Table 2, PanelA in Abadie et al. (2013)") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
@@ -316,7 +316,7 @@ plot_dataset %>%
                     position = position_dodge(.9)) +
   xlab("ntile of predicted math score(1 = low, 3 = high)") +
   ylab("Estimated ATE in dummy regression") +
-  ggtitle("Reproduction of Table 2 in Abadie et al. (2016)") +
+  ggtitle("Reproduction of Table 2 in Abadie et al. (2013)") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
@@ -349,7 +349,7 @@ comp_dataset %>%
                     position = position_dodge(.9)) +
   xlab("ntile of predicted math score(1 = low, 3 = high)") +
   ylab("Estimated ATE in dummy regression") +
-  ggtitle("Reproduction of Table 2 in Abadie et al. (2016)") +
+  ggtitle("Reproduction of Table 2 in Abadie et al. (2013)") +
   theme(plot.title = element_text(hjust = 0.5)) +
   facet_grid(~ origin)
 ```

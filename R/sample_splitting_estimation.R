@@ -1,5 +1,14 @@
 sample_splitting_estimation <- function(data, Y, treatment, X, M, ntilen, adjusted){
 
+  #fail fast
+  stopifnot(is.data.frame(data) || is_null(data))
+  stopifnot(is.character(Y) || is_null(Y))
+  stopifnot(is.character(X) || is_null(X))
+  stopifnot(is.character(treatment) || is_null(treatment))
+  stopifnot(is.logical(adjusted) || is_null(adjusted))
+  stopifnot(is.numeric(ntilen) || is_null(ntilen))
+  stopifnot(is.numeric(M) || is_null(M))
+
   ## separate dataset into control group and treatment group
   control_set <- data %>% filter_(paste(treatment, "==", 0))
   treatment_set <- data %>% filter_(paste(treatment, "==", 1))
