@@ -37,7 +37,7 @@ data <- read_dta("http://fmwww.bc.edu/ec-p/data/stockwatson/star_sw.dta")
 
 ### mutate column names into more close to the expression in the paper
 
-as a result we get n = 3784, which is slightly larger than the number in the paper.
+as a result we get n = 3784, which is slightly larger than the sample size in the paper.
 
 ``` r
 data <- data %>%
@@ -356,6 +356,20 @@ comp_dataset %>%
 
 ![](STAR_EXAMPLE_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
-The above result is not the same with the original table2. This may be caused by following two reasons. 1. dataset is not exactly the same with the dataset used in the paper.(we have 20 more sample some how) 2. sample splitting estimation is fluctuate a little bit.
+#### The above result is not the same with the original table2.
 
-However, we are able to confirm the conclusion does not change from this small difference. From this table we are able to conclude three things. a. low and middle group have positive and significant effect in any case, and estimation method may not change the result largely. b. high group have negative and significant effect in the case where full sample stratification is employed, and no significant effect was confirmed in the sample splitting estimation. c. By confirming the gap between the result of high and low group, high group have negative bias and low group have positive bias in full sample estimation.
+#### This may be caused by following two reasons.
+
+1.  dataset is not exactly the same with the dataset used in the paper.(we have 20 more sample some how)
+
+2.  sample splitting estimation is fluctuate a little bit.
+
+#### However, we are able to confirm the conclusion does not change from this small difference.
+
+#### From this table we are able to conclude three things.
+
+1.  low and middle group have positive and significant effect in any case, and estimation method may not change the result largely.
+
+2.  high group have negative and significant effect in the case where full sample stratification is employed, and no significant effect was confirmed in the sample splitting estimation.
+
+3.  By confirming the gap between the result of high and low group, high group have negative bias and low group have positive bias in full sample estimation.

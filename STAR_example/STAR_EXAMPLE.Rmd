@@ -211,16 +211,21 @@ comp_dataset %>%
 ```
 
 
-The above result is not the same with the original table2.
-This may be caused by following two reasons.
+#### The above result is not the same with the original table2.
+#### This may be caused by following two reasons.
+
 1. dataset is not exactly the same with the dataset used in the paper.(we have 20 more sample some how)
+
 2. sample splitting estimation is fluctuate a little bit.
 
 
-However, we are able to confirm the conclusion does not change from this small difference.
-From this table we are able to conclude three things.
+#### However, we are able to confirm the conclusion does not change from this small difference.
+#### From this table we are able to conclude three things.
+
 a. low and middle group have positive and significant effect in any case, and estimation method may not change the result largely.
+
 b. high group have negative and significant effect in the case where full sample stratification is employed, and no significant effect was confirmed in the sample splitting estimation.
+
 c. By confirming the gap between the result of high and low group, high group have negative bias and low group have positive bias in full sample estimation.
 
 
