@@ -302,15 +302,15 @@ comp_dataset %>%
 ```
 
 
-#### The above result is not the same with the original table2.
+#### The above result is not exactly the same with the original table2.
 #### This may be caused by following two reasons.
 
 1. dataset is not exactly the same with the dataset used in the paper.(we have 20 more sample some how)
 
-2. sample splitting estimation is fluctuate a little bit.
+2. sample splitting estimation is fluctuate a little bit, since its based on sampling.
 
 
-#### However, we are able to confirm the conclusion does not change from this small difference.
+#### However, we are able to confirm the conclusion does not change from this difference.
 #### From this table we are able to conclude three things.
 
 a. low and middle group have positive and significant effect in any case, and estimation method may not change the result largely.
