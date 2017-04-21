@@ -1,4 +1,4 @@
-ATE_ntile <- function(model, Y, treatment, X, adjusted, estimation_dataset, treatment_dataset, ntilen, i){
+ATE_ntile <- function(model, Y, treatment, Xvar, adjusted, estimation_dataset, treatment_dataset, ntilen, i){
 
   #get the control group dataset with its prediction result
   pred_control <- data.frame(pred = predict(model, newdata = estimation_dataset),
@@ -9,7 +9,7 @@ ATE_ntile <- function(model, Y, treatment, X, adjusted, estimation_dataset, trea
                                treatment_dataset)
 
   #dummy regression
-  estimate_result <- ATE_estimate(pred_control, pred_treatment, i, adjusted, Y, X, treatment, ntilen)
+  estimate_result <- ATE_estimate(pred_control, pred_treatment, i, adjusted, Y, Xvar, treatment, ntilen)
 
 
   #calculate the size of the dataset

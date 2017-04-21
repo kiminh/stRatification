@@ -1,9 +1,9 @@
-fullsample_stratification <- function(data, Y, treatment, X, adjusted, ntilen){
+fullsample_stratification <- function(data, Y, treatment, Xvar, adjusted, ntilen){
 
   #fail fast
   stopifnot(is.data.frame(data) || is_null(data))
   stopifnot(is.character(Y) || is_null(Y))
-  stopifnot(is.character(X) || is_null(X))
+  stopifnot(is.character(Xvar))
   stopifnot(is.character(treatment) || is_null(treatment))
   stopifnot(is.logical(adjusted) || is_null(adjusted))
   stopifnot(is.numeric(ntilen) || is_null(ntilen))
@@ -18,7 +18,7 @@ fullsample_stratification <- function(data, Y, treatment, X, adjusted, ntilen){
   treatment_set_cut <- level_cut(dataset = treatment_set, prediction_set = control_set, factor_col = factor_col)
 
   # take a regression in the non-treated group called prediction_set
-  ntile_formula <- as.formula(paste(Y, "~", paste(X, collapse = " + ")))
+  ntile_formula <- as.formula(paste(Y, "~", paste(Xvar, collapse = " + ")))
   reg <- control_set %>%
     lm(data = ., formula = ntile_formula)
 
@@ -26,7 +26,7 @@ fullsample_stratification <- function(data, Y, treatment, X, adjusted, ntilen){
   out <- ATE_ntile(model = reg,
                    Y = Y,
                    treatment = treatment,
-                   X = X,
+                   Xvar = Xvar,
                    adjusted = adjusted,
                    estimation_dataset = control_set,
                    treatment_dataset = treatment_set_cut,

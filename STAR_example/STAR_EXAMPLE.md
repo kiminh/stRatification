@@ -21,6 +21,7 @@ library(ggplot2)
     ## Warning: package 'ggplot2' was built under R version 3.3.3
 
 ``` r
+library(pforeach)
 library(stRatification)
 ```
 
@@ -62,7 +63,7 @@ hist(data$math_score_stand)
 
 ![](STAR_EXAMPLE_files/figure-markdown_github/math_score_stand-1.png)
 
-Reproduction of Table.2 in Alberto(2016)
+Reproduction of Table.2 in Alberto(2013)
 ----------------------------------------
 
 ### Panel A: Average treatment effect
@@ -246,7 +247,7 @@ panel_a %>%
 fs_result_unadjusted <- fullsample_stratification(data,
                                                   Y = "math_score_stand",
                                                   treatment = "small_class",
-                                                  X = c("female","black","free_lunch","school_attended"),
+                                                  Xvar = c("female","black","free_lunch","school_attended"),
                                                   adjusted = F,
                                                   ntilen = 3)
 ```
@@ -257,9 +258,44 @@ fs_result_unadjusted <- fullsample_stratification(data,
 fs_result_adjusted <- fullsample_stratification(data,
                                                   Y = "math_score_stand",
                                                   treatment = "small_class",
-                                                  X = c("female","black","free_lunch","school_attended"),
+                                                  Xvar = c("female","black","free_lunch","school_attended"),
                                                   adjusted = T,
                                                   ntilen = 3)
+```
+
+#### calculate standard error(fullsample)
+
+``` r
+fsbst_result_unadjusted <- fullsample_stratification_bst(R = 1000,
+                                                data,
+                                                  Y = "math_score_stand",
+                                                  treatment = "small_class",
+                                                  Xvar = c("female","black","free_lunch","school_attended"),
+                                                  adjusted = F,
+                                                  ntilen = 3,
+                                                parallel = T)
+
+fsbst_se_unadjusted <- fsbst_result_unadjusted %>%
+  group_by(nt, r) %>%
+  summarise(ATE = mean(ATE)) %>%
+  group_by(nt) %>% 
+  summarise(stder = sd(ATE))
+
+
+fsbst_result_adjusted <- fullsample_stratification_bst(R = 1000,
+                                                data,
+                                                  Y = "math_score_stand",
+                                                  treatment = "small_class",
+                                                  Xvar = c("female","black","free_lunch","school_attended"),
+                                                  adjusted = T,
+                                                  ntilen = 3,
+                                                parallel = T)
+
+fsbst_se_adjusted <- fsbst_result_adjusted %>%
+  group_by(nt, r) %>%
+  summarise(ATE = mean(ATE)) %>%
+  group_by(nt) %>% 
+  summarise(stder = sd(ATE))
 ```
 
 #### samplesplit and unadjusted
@@ -268,7 +304,7 @@ fs_result_adjusted <- fullsample_stratification(data,
 ss_result_unadjusted <- sample_splitting_estimation(data,
                                                     Y = "math_score_stand",
                                                     treatment = "small_class",
-                                                    X = c("female","black","free_lunch","school_attended"),
+                                                    Xvar = c("female","black","free_lunch","school_attended"),
                                                     M = 100,
                                                     ntilen = 3,
                                                     adjusted = F)
@@ -280,27 +316,70 @@ ss_result_unadjusted <- sample_splitting_estimation(data,
 ss_result_adjusted <- sample_splitting_estimation(data,
                                                     Y = "math_score_stand",
                                                     treatment = "small_class",
-                                                    X = c("female","black","free_lunch","school_attended"),
+                                                    Xvar = c("female","black","free_lunch","school_attended"),
                                                     M = 100,
                                                     ntilen = 3,
                                                     adjusted = T)
+```
+
+### calculate standard error(samplesplit)
+
+``` r
+ssbst_result_adjusted <- sample_splitting_stratification_bst(R = 1000,
+                                                             data = data,
+                                                             Y = "math_score_stand",
+                                                             treatment = "small_class",
+                                                             Xvar = c("female","black","free_lunch","school_attended"),
+                                                             M = 100,
+                                                             ntilen = 3,
+                                                             adjusted = T,
+                                                             parallel = T)
+
+ssbst_se_adjusted <- ssbst_result_adjusted  %>% 
+  group_by(nt,r) %>%
+  summarise(ATE = mean(ATE)) %>%
+  group_by(nt) %>%
+  summarise(stder = sd(ATE))
+
+ssbst_result_unadjusted <- sample_splitting_stratification_bst(R = 1000,
+                                                               data = data,
+                                                               Y = "math_score_stand",
+                                                               treatment = "small_class",
+                                                               Xvar = c("female","black","free_lunch","school_attended"),
+                                                               M = 100,
+                                                               ntilen = 3,
+                                                               adjusted = F,
+                                                               parallel = T)
+
+ssbst_se_unadjusted <- ssbst_result_unadjusted  %>% 
+  group_by(nt,r) %>%
+  summarise(ATE = mean(ATE)) %>%
+  group_by(nt) %>%
+  summarise(stder = sd(ATE))
 ```
 
 ### plot table\_2 reproduction
 
 ``` r
 fs_res <- fs_result_adjusted %>%
+  select(-stder) %>%
+  inner_join(fsbst_se_adjusted, by = "nt") %>%
   mutate(method = "fs_adjusted") %>%
-  rbind(fs_result_unadjusted %>% mutate(method = "fs_unadjusted")) %>%
+  rbind(fs_result_unadjusted %>%
+          select(-stder) %>%
+  inner_join(fsbst_se_unadjusted, by = "nt") %>%
+          mutate(method = "fs_unadjusted")) %>%
   select(-M)
 
 ss_res <- ss_result_unadjusted %>% 
   group_by(nt) %>%
-  summarise(ATE = mean(ATE), stder = mean(stder)) %>%
+  summarise(ATE = mean(ATE)) %>%
+  inner_join(ssbst_se_unadjusted, by = "nt") %>%
   mutate(method = "ss_unadjusted") %>%
   rbind(ss_result_adjusted %>% 
   group_by(nt) %>%
-  summarise(ATE = mean(ATE), stder = mean(stder)) %>%
+  summarise(ATE = mean(ATE)) %>%
+  inner_join(ssbst_se_unadjusted, by = "nt") %>%
     mutate(method = "ss_adjusted"))
 
 plot_dataset <- rbind(fs_res, ss_res) %>% mutate(origin = "reproduction")
@@ -354,7 +433,7 @@ comp_dataset %>%
   facet_grid(~ origin)
 ```
 
-![](STAR_EXAMPLE_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](STAR_EXAMPLE_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 #### The above result is not the same with the original table2.
 

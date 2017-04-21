@@ -1,4 +1,4 @@
-ATE_estimate <- function(pred_control, pred_treatment, i, adjusted, Y, X, treatment, ntilen){
+ATE_estimate <- function(pred_control, pred_treatment, i, adjusted, Y, Xvar, treatment, ntilen){
 
   #prepare function for estimate ATE within each group
   group_reg <- function(pred_control, pred_treatment, i, ate_formula, treatment, ntilen){
@@ -21,7 +21,7 @@ ATE_estimate <- function(pred_control, pred_treatment, i, adjusted, Y, X, treatm
 
   }else if(adjusted == T){ #adjusted which is dummy regression with control variable(indicated as X)
 
-    ate_formula <- as.formula(paste(Y, "~", treatment, "+", paste(X, collapse = " + ")))
+    ate_formula <- as.formula(paste(Y, "~", treatment, "+", paste(Xvar, collapse = " + ")))
     group_reg(pred_control, pred_treatment, i, ate_formula, treatment, ntilen)
 
   }
